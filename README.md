@@ -30,23 +30,18 @@ No pre-configuration is required! The program will prompt you for WiFi credentia
 When the program runs successfully, you should see output similar to:
 
 ```
-=== ESP32 Network Information ===
-MAC Address: XX:XX:XX:XX:XX:XX
+Connected to SSID: Aardvark
 
-=== WiFi Configuration ===
-Please enter WiFi credentials:
-SSID: YourNetworkName
-Password: YourPassword
-Connecting to: YourNetworkName
-========================
+=== Device MAC Address ===
+MAC Address: FC:01:2C:E3:CA:94
+==========================
 
-wifi_init_sta finished.
-got ip:192.168.1.100
-connected to ap SSID:YourNetworkName
-IP Address: 192.168.1.100
+=== WiFi Information ===
+ESP32 IP Address: 192.168.86.49
+WiFi SSID: Aardvark
 Netmask: 255.255.255.0
-Gateway: 192.168.1.1
-================================
+Gateway: 192.168.86.1
+==============================
 ```
 
 ## User Input
