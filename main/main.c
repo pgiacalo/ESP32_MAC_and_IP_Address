@@ -12,7 +12,7 @@
 
 // WiFi configuration
 #define WIFI_SSID      "Aardvark"
-#define WIFI_PASS      "******"
+#define WIFI_PASS      "*******"
 #define WIFI_MAXIMUM_RETRY  5
 
 
@@ -30,14 +30,112 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        wifi_event_sta_disconnected_t* disconnected = (wifi_event_sta_disconnected_t*) event_data;
+        printf("WiFi disconnected. Reason: %d - ", disconnected->reason);
+        
+        // Provide human-readable error messages for common disconnect reasons
+        switch (disconnected->reason) {
+            case WIFI_REASON_UNSPECIFIED:
+                printf("Unspecified reason");
+                break;
+            case WIFI_REASON_AUTH_EXPIRE:
+                printf("Authentication expired");
+                break;
+            case WIFI_REASON_AUTH_LEAVE:
+                printf("Authentication left");
+                break;
+            case WIFI_REASON_ASSOC_EXPIRE:
+                printf("Association expired");
+                break;
+            case WIFI_REASON_ASSOC_TOOMANY:
+                printf("Too many associations");
+                break;
+            case WIFI_REASON_NOT_AUTHED:
+                printf("Not authenticated");
+                break;
+            case WIFI_REASON_NOT_ASSOCED:
+                printf("Not associated");
+                break;
+            case WIFI_REASON_ASSOC_LEAVE:
+                printf("Association left");
+                break;
+            case WIFI_REASON_ASSOC_NOT_AUTHED:
+                printf("Association not authenticated");
+                break;
+            case WIFI_REASON_DISASSOC_PWRCAP_BAD:
+                printf("Disassociation due to power capability");
+                break;
+            case WIFI_REASON_DISASSOC_SUPCHAN_BAD:
+                printf("Disassociation due to supported channels");
+                break;
+            case WIFI_REASON_IE_INVALID:
+                printf("Invalid information element");
+                break;
+            case WIFI_REASON_MIC_FAILURE:
+                printf("MIC failure");
+                break;
+            case WIFI_REASON_4WAY_HANDSHAKE_TIMEOUT:
+                printf("4-way handshake timeout");
+                break;
+            case WIFI_REASON_GROUP_KEY_UPDATE_TIMEOUT:
+                printf("Group key update timeout");
+                break;
+            case WIFI_REASON_IE_IN_4WAY_DIFFERS:
+                printf("Information element in 4-way handshake differs");
+                break;
+            case WIFI_REASON_GROUP_CIPHER_INVALID:
+                printf("Group cipher invalid");
+                break;
+            case WIFI_REASON_PAIRWISE_CIPHER_INVALID:
+                printf("Pairwise cipher invalid");
+                break;
+            case WIFI_REASON_AKMP_INVALID:
+                printf("AKMP invalid");
+                break;
+            case WIFI_REASON_UNSUPP_RSN_IE_VERSION:
+                printf("Unsupported RSN IE version");
+                break;
+            case WIFI_REASON_INVALID_RSN_IE_CAP:
+                printf("Invalid RSN IE capabilities");
+                break;
+            case WIFI_REASON_802_1X_AUTH_FAILED:
+                printf("802.1X authentication failed");
+                break;
+            case WIFI_REASON_CIPHER_SUITE_REJECTED:
+                printf("Cipher suite rejected");
+                break;
+            case WIFI_REASON_BEACON_TIMEOUT:
+                printf("Beacon timeout");
+                break;
+            case WIFI_REASON_NO_AP_FOUND:
+                printf("No access point found");
+                break;
+            case WIFI_REASON_AUTH_FAIL:
+                printf("Authentication failed");
+                break;
+            case WIFI_REASON_ASSOC_FAIL:
+                printf("Association failed");
+                break;
+            case WIFI_REASON_HANDSHAKE_TIMEOUT:
+                printf("Handshake timeout");
+                break;
+            case WIFI_REASON_CONNECTION_FAIL:
+                printf("Connection failed");
+                break;
+            default:
+                printf("Unknown reason");
+                break;
+        }
+        printf("\n");
+        
         if (s_retry_num < WIFI_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
-            printf("retry to connect to the AP\n");
+            printf("Retry to connect to the access point (attempt %d/%d)\n", s_retry_num, WIFI_MAXIMUM_RETRY);
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
-        printf("connect to the AP fail\n");
+        printf("Connection to the access point failed (attempt %d/%d)\n", s_retry_num, WIFI_MAXIMUM_RETRY);
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         // printf("got ip:" IPSTR "\n", IP2STR(&((ip_event_got_ip_t*)event_data)->ip_info.ip));
         s_retry_num = 0;
@@ -131,7 +229,7 @@ void app_main(void)
     
     // Report all information together at the end
     printf("\n=== Device MAC Address ===\n");
-    printf("ESP32MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\n",
+    printf("ESP32 MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\n",
            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
     printf("==========================\n");
     
