@@ -1,4 +1,4 @@
-# ESP32 MAC Address and IP Address Example
+# ESP32 MAC Address and IP Address Utility
 
 This ESP32 project demonstrates how to retrieve both the MAC address and IP address of an ESP32 device.
 
@@ -11,7 +11,19 @@ This ESP32 project demonstrates how to retrieve both the MAC address and IP addr
 
 ## Configuration
 
-No pre-configuration is required! The program will prompt you for WiFi credentials when it runs.
+Before building and flashing, you must configure the WiFi credentials in `main.c`:
+
+1. Open `main/main.c`
+2. Find the WiFi configuration section
+3. Update the following variables with your network details:
+   - `WIFI_SSID`: Your WiFi network name
+   - `WIFI_PASSWORD`: Your WiFi password
+
+Example:
+```c
+#define WIFI_SSID "YourNetworkName"
+#define WIFI_PASSWORD "YourPassword"
+```
 
 ## Building and Flashing
 
@@ -44,13 +56,13 @@ Gateway: 192.168.86.1
 ==============================
 ```
 
-## User Input
+## Usage
 
-The program uses UART (serial communication) to receive user input. When prompted:
-- Type your WiFi SSID and press Enter
-- Type your WiFi password and press Enter
-- You can use backspace to correct typing errors
-- The input is displayed in real-time as you type
+Once configured and flashed, the program will:
+1. Automatically connect to the configured WiFi network
+2. Display the device MAC address
+3. Show the assigned IP address and network information
+4. Run continuously, displaying network status
 
 ## Components Used
 
