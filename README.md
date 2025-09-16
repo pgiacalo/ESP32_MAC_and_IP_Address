@@ -1,23 +1,22 @@
 # ESP32 MAC and IP Address Library
 
-A comprehensive ESP32 library for retrieving MAC addresses and IP addresses with easy WiFi connectivity management. This library provides a clean, reusable API that can be easily integrated into any ESP32 project.
+A library for retrieving MAC addresses and IP addresses with WiFi connectivity management for ESP32 projects.
 
-## 🚀 Features
+## Features
 
-- **MAC Address Retrieval**: Get MAC addresses for different interfaces (WiFi STA, SoftAP, etc.)
-- **WiFi Connectivity**: Simple WiFi connection management with retry logic
-- **IP Address Management**: Automatic IP address retrieval and formatting
-- **Comprehensive Output**: Formatted display of all network information
-- **Error Handling**: Detailed error messages and proper error codes
-- **Resource Management**: Proper initialization and cleanup
-- **Easy Integration**: Clean API designed for reuse across projects
+- MAC address retrieval for different interfaces (WiFi STA, SoftAP, etc.)
+- WiFi connection management with retry logic
+- IP address retrieval and formatting
+- Formatted display of network information
+- Error handling with detailed messages
+- Resource management and cleanup
 
-## 📚 Library Design
+## Library Design
 
-The library is structured into two main files:
+The library consists of two files:
 
-- **`esp32_mac_ip.h`**: Header file with function declarations and data structures
-- **`esp32_mac_ip.c`**: Implementation file with all functionality
+- `esp32_mac_ip.h` - Header file with function declarations and data structures
+- `esp32_mac_ip.c` - Implementation file with all functionality
 
 ### Key Data Structures
 
@@ -54,7 +53,7 @@ typedef struct {
 } network_info_t;
 ```
 
-## 🔧 API Reference
+## API Reference
 
 ### Core Functions
 
@@ -122,7 +121,7 @@ Clean up resources and deinitialize the library.
 esp_err_t esp32_mac_ip_deinit(void);
 ```
 
-## 💡 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -182,7 +181,7 @@ if (esp32_mac_ip_is_wifi_connected()) {
 }
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 Before building and flashing, configure your WiFi credentials in `main.c`:
 
@@ -192,7 +191,7 @@ Before building and flashing, configure your WiFi credentials in `main.c`:
 #define WIFI_MAXIMUM_RETRY  5
 ```
 
-## 🔨 Building and Flashing
+## Building and Flashing
 
 1. Make sure you have ESP-IDF installed and configured
 2. Build the project:
@@ -204,7 +203,7 @@ Before building and flashing, configure your WiFi credentials in `main.c`:
    idf.py flash monitor
    ```
 
-## 📤 Expected Output
+## Expected Output
 
 When the program runs successfully, you should see output similar to:
 
@@ -225,19 +224,19 @@ Gateway: 192.168.86.1
 ==============================
 ```
 
-## 🔗 Integration Guide
+## Integration Guide
 
 ### Adding to Your Project
 
-1. **Copy Library Files**: Copy `esp32_mac_ip.h` and `esp32_mac_ip.c` to your project's `main` directory
-2. **Update CMakeLists.txt**: Add the library file to your component:
+1. Copy `esp32_mac_ip.h` and `esp32_mac_ip.c` to your project's `main` directory
+2. Update CMakeLists.txt to include the library file:
    ```cmake
    idf_component_register(SRCS "esp32_mac_ip.c" "main.c"
                          INCLUDE_DIRS "."
                          REQUIRES esp_wifi esp_netif nvs_flash)
    ```
-3. **Include Header**: Add `#include "esp32_mac_ip.h"` to your source files
-4. **Initialize**: Call `esp32_mac_ip_init()` before using any library functions
+3. Add `#include "esp32_mac_ip.h"` to your source files
+4. Call `esp32_mac_ip_init()` before using any library functions
 
 ### Dependencies
 
@@ -248,7 +247,7 @@ The library requires these ESP-IDF components:
 - `esp_event`: Event handling system
 - `freertos`: Real-time operating system components
 
-## 🛠️ Error Handling
+## Error Handling
 
 The library includes comprehensive error handling:
 
@@ -273,15 +272,15 @@ if (ret != ESP_OK) {
 }
 ```
 
-## 🎯 Use Cases
+## Use Cases
 
-This library is perfect for:
-- **Device Identification**: Getting unique MAC addresses for device registration
-- **Network Configuration**: Automatically connecting to WiFi and getting IP addresses
-- **IoT Applications**: Quick network setup for ESP32-based IoT devices
-- **Debugging**: Network troubleshooting and status monitoring
-- **Device Management**: Remote device identification and network status
+This library can be used for:
+- Device identification using MAC addresses
+- Network configuration and WiFi setup
+- IoT applications requiring network information
+- Network debugging and status monitoring
+- Device management and remote identification
 
-## 📝 License
+## License
 
 This project is open source and available under the MIT License.
